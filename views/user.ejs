@@ -1,4 +1,8 @@
 <%- include("partials/header") %>
-<h1>User page</h1>
-<p>Only for logged in users..</p>
+<div class="container my-5">
+    <h1>Üdvözöljük, <%= user.username %>!</h1>
+    <p class="lead">Ez az oldal csak bejelentkezett felhasználóknak érhető el.</p>
+    <a class="btn btn-primary me-2" href="/uzenetek">Üzenetek</a>
+    <a class="btn btn-outline-primary" href="/diagram">Diagram</a>
+</div>
 <%- include("partials/footer") %>

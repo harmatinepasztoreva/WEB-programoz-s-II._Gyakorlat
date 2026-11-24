@@ -9,12 +9,12 @@ exports.registerGet = (req, res) => { res.render("register"); };
 exports.registerPost = async (req, res) => {
     const existingUser = await User.findOne({ username: req.body.username });
     if (existingUser) {
-        req.session.message = "This user already exists!";
+        req.session.message = "Már van ilyen felhasználó!";
         return res.redirect("/register");
     }
     const hash = await bcrypt.hash(req.body.password, 10);
     await User.create({ username: req.body.username, password: hash, role: "user" });
-    req.session.message = "Successful registration! You can log in.";
+    req.session.message = "Sikeres regisztráció! Most már bejelentkezhet.";
     res.redirect("/login");
 };
 
@@ -22,12 +22,12 @@ exports.loginGet = (req, res) => { res.render("login"); };
 exports.loginPost = async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-        req.session.message = "Login failed!";
+        req.session.message = "Nem sikerült a bejelentkezés!";
         return res.redirect("/login");
     }
     const ok = await bcrypt.compare(req.body.password, user.password);
     if (!ok) {
-        req.session.message = "Login failed!";
+        req.session.message = "Nem sikerült a bejelentkezés!";
         return res.redirect("/login");
     }
     req.session.user = { id: user._id, username: user.username, role: user.role };

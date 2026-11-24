@@ -1,14 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="hu">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ReNew Notebook</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/style.css">
     </head>
-    <body>
-        <nav>
-            <a href="/">Home</a>
-            <% if(user){ %><a href="/user">User</a> <% } %>
-            <% if(user && user.role=="admin"){ %><a href="/admin">Admin</a> <% } %>
-            <% if(!user){ %><a href="/login">Login</a> <a href="/register">Register</a> <% }else{ %>
-            <%= user.username %> <a href="/logout">Logout</a> <% } %>
+    <body class="d-flex flex-column min-vh-100">
+        <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="/">ReNew Notebook</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#fomenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="fomenu">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link <%= path === '/' ? 'active' : '' %>" href="/">Főoldal</a></li>
+                        <li class="nav-item"><a class="nav-link <%= path === '/adatbazis' ? 'active' : '' %>" href="/adatbazis">Adatbázis</a></li>
+                        <li class="nav-item"><a class="nav-link <%= path === '/kapcsolat' ? 'active' : '' %>" href="/kapcsolat">Kapcsolat</a></li>
+                        <% if(user){ %>
+                        <li class="nav-item"><a class="nav-link <%= path === '/uzenetek' ? 'active' : '' %>" href="/uzenetek">Üzenetek</a></li>
+                        <li class="nav-item"><a class="nav-link <%= path === '/diagram' ? 'active' : '' %>" href="/diagram">Diagram</a></li>
+                        <% } %>
+                        <% if(user && user.role=="admin"){ %>
+                        <li class="nav-item"><a class="nav-link <%= path.startsWith('/crud') ? 'active' : '' %>" href="/crud">CRUD</a></li>
+                        <% } %>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <% if(!user){ %>
+                        <li class="nav-item"><a class="nav-link <%= path === '/login' ? 'active' : '' %>" href="/login">Bejelentkezés</a></li>
+                        <li class="nav-item"><a class="nav-link <%= path === '/register' ? 'active' : '' %>" href="/register">Regisztráció</a></li>
+                        <% }else{ %>
+                        <li class="nav-item"><a class="nav-link" href="<%= user.role=='admin' ? '/admin' : '/user' %>"><%= user.username %> (<%= user.role=='admin' ? 'admin' : 'regisztrált látogató' %>)</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Kijelentkezés</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
         </nav>
-        <hr>
+        <main class="flex-grow-1">
+            <% if(message){ %>
+            <div class="container mt-3">
+                <div class="alert alert-info message"><%= message %></div>
+            </div>
+            <% } %>

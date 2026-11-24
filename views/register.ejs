@@ -1,8 +1,16 @@
 <%- include("partials/header") %>
-<% if(message){ %><p class="message"><%= message %></p><% } %>
-<form method="POST">
-    <input name="username" placeholder="Username">
-    <input type="password" name="password" placeholder="Password">
-    <button>Registration</button>
-</form>
+<div class="container my-5 urlap-doboz">
+    <h1 class="mb-4">Regisztráció</h1>
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label" for="username">Felhasználónév</label>
+            <input class="form-control" id="username" name="username" placeholder="Felhasználónév" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="password">Jelszó</label>
+            <input class="form-control" type="password" id="password" name="password" placeholder="Jelszó" required>
+        </div>
+        <button class="btn btn-primary">Regisztráció</button>
+    </form>
+</div>
 <%- include("partials/footer") %>
