@@ -1,4 +1,82 @@
 <%- include("partials/header") %>
-<h1>Home</h1>
-<p>Available to all visitors.</p>
+<section class="hero text-center">
+    <div class="container">
+        <h1>ReNew Notebook</h1>
+        <p class="lead mb-4">Gyárilag felújított notebookok Seholország fővárosában – igen kedvező áron.</p>
+        <a class="btn btn-light btn-lg me-2" href="/adatbazis">Kínálatunk</a>
+        <a class="btn btn-outline-light btn-lg" href="/kapcsolat">Írjon nekünk</a>
+    </div>
+</section>
+<section class="container my-5">
+    <div class="row text-center g-4">
+        <div class="col-6 col-md-3">
+            <div class="stat-szam"><%= gepDb %></div>
+            <div>notebook típus</div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-szam"><%= raktaron %></div>
+            <div>gép raktáron</div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-szam"><%= gyartok.length %></div>
+            <div>gyártó</div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-szam">100%</div>
+            <div>gyári felújítás</div>
+        </div>
+    </div>
+</section>
+<section class="container my-5">
+    <h2 class="text-center mb-4">Miért a ReNew?</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="kep-kartya" style="background-image: url('/images/kep1.jpg')"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Gyári felújítás</h5>
+                    <p class="card-text">Kizárólag gyárilag felújított, bevizsgált notebookokat árulunk.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="kep-kartya" style="background-image: url('/images/kep2.jpg')"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Kedvező árak</h5>
+                    <p class="card-text">Új gépek töredékáráért juthat hozzá márkás notebookokhoz.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="kep-kartya" style="background-image: url('/images/kep3.jpg')"></div>
+                <div class="card-body">
+                    <h5 class="card-title">Széles választék</h5>
+                    <p class="card-text">Több gyártó, sokféle processzor és operációs rendszer közül választhat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Legjobb ajánlataink</h2>
+        <div class="row g-4">
+            <% ajanlat.forEach(g => { %>
+            <div class="col-md-4">
+                <div class="card border-primary h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= g.gyarto %> <%= g.tipus %></h5>
+                        <p class="card-text mb-1"><%= g.kijelzo %>" kijelző, <%= g.memoria %> MB memória</p>
+                        <p class="card-text"><%= g.processzor %></p>
+                        <p class="stat-szam mb-0"><%= g.ar.toLocaleString("hu-HU") %> Ft</p>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <p class="text-center mt-4">Gyártóink: <% gyartok.forEach(gy => { %><span class="badge bg-primary me-1"><%= gy %></span><% }) %></p>
+    </div>
+</section>
 <%- include("partials/footer") %>
