@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const Gep = require("../models/Gep");
 const Processzor = require("../models/Processzor");
 const Oprendszer = require("../models/Oprendszer");
+const Uzenet = require("../models/Uzenet");
 
 exports.homeIndex = async (req, res) => {
     const gepek = await Gep.find();
@@ -71,4 +72,19 @@ exports.adatbazisIndex = async (req, res) => {
     });
     const osStat = oprendszerek.map(o => ({ nev: o.nev, darab: gepek.filter(g => g.oprendszerid === o.id).length }));
     res.render("adatbazis", { lista, gyartok: gyartok.sort(), valasztott, osStat, processzorDb: processzorok.length });
+};
+
+exports.kapcsolatGet = (req, res) => { res.render("kapcsolat", { urlap: {}, errors: {} }); };
+exports.kapcsolatPost = async (req, res) => {
+    try {
+        await Uzenet.create({ nev: req.body.nev, email: req.body.email, targy: req.body.targy, uzenet: req.body.uzenet });
+        req.session.message = "Köszönjük! Az üzenetét elmentettük.";
+        res.redirect("/kapcsolat");
+    } catch (err) {
+        console.error(err);
+        if (err.name === "ValidationError") {
+            return res.render("kapcsolat", { urlap: req.body, errors: err.errors });
+        }
+        res.status(500).send("Internal server error.");
+    }
 };

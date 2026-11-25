@@ -1,0 +1,42 @@
+<%- include("partials/header") %>
+<div class="container my-5">
+    <div class="row g-5">
+        <div class="col-lg-7">
+            <h1 class="mb-4">Kapcsolat</h1>
+            <form method="POST" action="/kapcsolat" novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="nev">Név</label>
+                    <input class="form-control <%= errors.nev ? 'is-invalid' : '' %>" id="nev" name="nev" value="<%= urlap.nev || '' %>">
+                    <div class="invalid-feedback"><%= errors.nev ? errors.nev.message : "" %></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="email">E-mail</label>
+                    <input class="form-control <%= errors.email ? 'is-invalid' : '' %>" id="email" name="email" value="<%= urlap.email || '' %>">
+                    <div class="invalid-feedback"><%= errors.email ? errors.email.message : "" %></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="targy">Tárgy</label>
+                    <input class="form-control <%= errors.targy ? 'is-invalid' : '' %>" id="targy" name="targy" value="<%= urlap.targy || '' %>">
+                    <div class="invalid-feedback"><%= errors.targy ? errors.targy.message : "" %></div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="uzenet">Üzenet</label>
+                    <textarea class="form-control <%= errors.uzenet ? 'is-invalid' : '' %>" id="uzenet" name="uzenet" rows="5"><%= urlap.uzenet || '' %></textarea>
+                    <div class="invalid-feedback"><%= errors.uzenet ? errors.uzenet.message : "" %></div>
+                </div>
+                <button class="btn btn-primary">Küldés</button>
+            </form>
+        </div>
+        <div class="col-lg-5">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">ReNew Kft.</h5>
+                    <p class="card-text mb-1">Seholország fővárosa</p>
+                    <p class="card-text mb-1">Gyárilag felújított notebookok</p>
+                    <p class="card-text">Kérdése, észrevétele van? Írjon nekünk az űrlapon, az üzenetet az oldal tulajdonosa kapja meg.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>
