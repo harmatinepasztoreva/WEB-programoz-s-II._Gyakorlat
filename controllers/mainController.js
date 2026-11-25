@@ -57,3 +57,18 @@ exports.loginPost = async (req, res) => {
 exports.logout = (req, res) => {
     req.session.destroy(() => { res.redirect("/"); });
 };
+exports.adatbazisIndex = async (req, res) => {
+    const gepek = await Gep.find();
+    const processzorok = await Processzor.find();
+    const oprendszerek = await Oprendszer.find();
+    const gyartok = [];
+    gepek.forEach(g => { if (!gyartok.includes(g.gyarto.toUpperCase())) { gyartok.push(g.gyarto.toUpperCase()); } });
+    const valasztott = req.query.gyarto || "";
+    const lista = gepek.filter(g => valasztott === "" || g.gyarto.toUpperCase() === valasztott).map(g => {
+        const p = processzorok.find(p => p.id === g.processzorid);
+        const o = oprendszerek.find(o => o.id === g.oprendszerid);
+        return { gyarto: g.gyarto, tipus: g.tipus, kijelzo: g.kijelzo, memoria: g.memoria, merevlemez: g.merevlemez, videovezerlo: g.videovezerlo, ar: g.ar, db: g.db, processzor: p ? p.gyarto + " " + p.tipus : "-", oprendszer: o ? o.nev : "-" };
+    });
+    const osStat = oprendszerek.map(o => ({ nev: o.nev, darab: gepek.filter(g => g.oprendszerid === o.id).length }));
+    res.render("adatbazis", { lista, gyartok: gyartok.sort(), valasztott, osStat, processzorDb: processzorok.length });
+};

@@ -1,0 +1,56 @@
+<%- include("partials/header") %>
+<div class="container my-5">
+    <h1 class="mb-2">Adatbázis</h1>
+    <p class="lead">Kínálatunk a három tábla alapján: <strong>gep</strong>, <strong>processzor</strong> és <strong>oprendszer</strong>.</p>
+    <form method="GET" action="/adatbazis" class="row g-2 align-items-center mb-3">
+        <div class="col-auto"><label class="col-form-label" for="gyarto">Gyártó:</label></div>
+        <div class="col-auto">
+            <select class="form-select" id="gyarto" name="gyarto">
+                <option value="">Összes gyártó</option>
+                <% gyartok.forEach(gy => { %>
+                <option value="<%= gy %>" <%= valasztott === gy ? "selected" : "" %>><%= gy %></option>
+                <% }) %>
+            </select>
+        </div>
+        <div class="col-auto"><button class="btn btn-primary">Szűrés</button></div>
+        <div class="col-auto"><span class="text-muted"><%= lista.length %> találat</span></div>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-sm align-middle">
+            <thead class="table-primary">
+                <tr><th>Gyártó</th><th>Típus</th><th>Kijelző</th><th>Memória</th><th>Merevlemez</th><th>Videovezérlő</th><th>Processzor</th><th>Operációs rendszer</th><th>Ár</th><th>Raktáron</th></tr>
+            </thead>
+            <tbody>
+                <% lista.forEach(g => { %>
+                <tr>
+                    <td><%= g.gyarto %></td>
+                    <td><%= g.tipus %></td>
+                    <td><%= g.kijelzo %>"</td>
+                    <td><%= g.memoria %> MB</td>
+                    <td><%= g.merevlemez %> GB</td>
+                    <td><%= g.videovezerlo %></td>
+                    <td><%= g.processzor %></td>
+                    <td><%= g.oprendszer %></td>
+                    <td class="text-nowrap"><%= g.ar.toLocaleString("hu-HU") %> Ft</td>
+                    <td><% if(g.db > 0){ %><span class="badge bg-success"><%= g.db %> db</span><% }else{ %><span class="badge bg-secondary">nincs</span><% } %></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <h2 class="h4 mt-5">Operációs rendszerek</h2>
+    <p>A processzor táblában <%= processzorDb %> processzortípus szerepel.</p>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr><th>Operációs rendszer</th><th>Notebook típusok száma</th></tr>
+            </thead>
+            <tbody>
+                <% osStat.forEach(o => { %>
+                <tr><td><%= o.nev %></td><td><%= o.darab %></td></tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<%- include("partials/footer") %>

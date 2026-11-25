@@ -11,6 +11,7 @@ isAdmin=(req,res,next)=>{
 }
 
 router.get("/", controller.homeIndex);
+router.get("/adatbazis", controller.adatbazisIndex);
 router.get("/register", controller.registerGet);
 router.post("/register", controller.registerPost);
 router.get("/login", controller.loginGet);
