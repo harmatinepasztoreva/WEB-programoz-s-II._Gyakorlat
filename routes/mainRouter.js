@@ -21,4 +21,5 @@ router.post("/login", controller.loginPost);
 router.get("/logout", controller.logout);
 router.get("/user", isLoggedIn, controller.userIndex);
 router.get("/admin", isAdmin, controller.adminIndex);
+router.get("/uzenetek", isLoggedIn, controller.uzenetekIndex);
 module.exports = router;

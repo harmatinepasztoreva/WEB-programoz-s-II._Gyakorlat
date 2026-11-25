@@ -88,3 +88,8 @@ exports.kapcsolatPost = async (req, res) => {
         res.status(500).send("Internal server error.");
     }
 };
+
+exports.uzenetekIndex = async (req, res) => {
+    const uzenetek = await Uzenet.find().sort({ datum: -1 });
+    res.render("uzenetek", { uzenetek });
+};
