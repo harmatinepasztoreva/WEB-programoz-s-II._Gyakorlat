@@ -22,4 +22,5 @@ router.get("/logout", controller.logout);
 router.get("/user", isLoggedIn, controller.userIndex);
 router.get("/admin", isAdmin, controller.adminIndex);
 router.get("/uzenetek", isLoggedIn, controller.uzenetekIndex);
+router.get("/diagram", isLoggedIn, controller.diagramIndex);
 module.exports = router;

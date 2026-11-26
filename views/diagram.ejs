@@ -1,0 +1,59 @@
+<%- include("partials/header") %>
+<div class="container my-5">
+    <h1 class="mb-2">Diagram</h1>
+    <p class="lead">A gep és az oprendszer tábla adatai Chart.js diagramokon.</p>
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Notebook típusok és raktárkészlet gyártónként</h5>
+                    <div class="diagram-doboz"><canvas id="gyartoDiagram"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Operációs rendszerek megoszlása</h5>
+                    <div class="diagram-doboz"><canvas id="osDiagram"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="h4 mt-5">Átlagár gyártónként</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr><th>Gyártó</th><th>Típusok száma</th><th>Raktáron (db)</th><th>Átlagár</th></tr>
+            </thead>
+            <tbody>
+                <% gyartok.forEach((gy, i) => { %>
+                <tr><td><%= gy %></td><td><%= tipusok[i] %></td><td><%= raktaron[i] %></td><td><%= atlagar[i].toLocaleString("hu-HU") %> Ft</td></tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    new Chart(document.getElementById("gyartoDiagram"), {
+        type: "bar",
+        data: {
+            labels: <%- JSON.stringify(gyartok) %>,
+            datasets: [
+                { label: "Típusok száma", data: <%- JSON.stringify(tipusok) %>, backgroundColor: "#2fa4e7" },
+                { label: "Raktáron (db)", data: <%- JSON.stringify(raktaron) %>, backgroundColor: "#73a839" }
+            ]
+        },
+        options: { maintainAspectRatio: false }
+    });
+    new Chart(document.getElementById("osDiagram"), {
+        type: "pie",
+        data: {
+            labels: <%- JSON.stringify(osNevek) %>,
+            datasets: [{ data: <%- JSON.stringify(osDarabok) %> }]
+        },
+        options: { maintainAspectRatio: false, plugins: { legend: { position: "bottom" } } }
+    });
+</script>
+<%- include("partials/footer") %>

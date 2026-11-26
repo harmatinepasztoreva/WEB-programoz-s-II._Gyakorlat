@@ -93,3 +93,31 @@ exports.uzenetekIndex = async (req, res) => {
     const uzenetek = await Uzenet.find().sort({ datum: -1 });
     res.render("uzenetek", { uzenetek });
 };
+
+exports.diagramIndex = async (req, res) => {
+    const gepek = await Gep.find();
+    const oprendszerek = await Oprendszer.find();
+    const gyartok = [];
+    gepek.forEach(g => { if (!gyartok.includes(g.gyarto.toUpperCase())) { gyartok.push(g.gyarto.toUpperCase()); } });
+    gyartok.sort();
+    const tipusok = gyartok.map(() => 0);
+    const raktaron = gyartok.map(() => 0);
+    const arOsszeg = gyartok.map(() => 0);
+    gepek.forEach(g => {
+        const i = gyartok.indexOf(g.gyarto.toUpperCase());
+        tipusok[i] += 1;
+        raktaron[i] += g.db;
+        arOsszeg[i] += g.ar;
+    });
+    const atlagar = arOsszeg.map((osszeg, i) => Math.round(osszeg / tipusok[i]));
+    const osNevek = [];
+    const osDarabok = [];
+    oprendszerek.forEach(o => {
+        const darab = gepek.filter(g => g.oprendszerid === o.id).length;
+        if (darab > 0) {
+            osNevek.push(o.nev);
+            osDarabok.push(darab);
+        }
+    });
+    res.render("diagram", { gyartok, tipusok, raktaron, atlagar, osNevek, osDarabok });
+};
