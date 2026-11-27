@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const controller = require("../controllers/mainController");
+const gepController = require("../controllers/gepController");
 
 isLoggedIn=(req,res,next)=>{
     if(req.session.user){return next();}
@@ -23,4 +24,6 @@ router.get("/user", isLoggedIn, controller.userIndex);
 router.get("/admin", isAdmin, controller.adminIndex);
 router.get("/uzenetek", isLoggedIn, controller.uzenetekIndex);
 router.get("/diagram", isLoggedIn, controller.diagramIndex);
+router.get("/crud", isAdmin, gepController.index);
+router.get("/crud/delete/:id", isAdmin, gepController.remove);
 module.exports = router;
