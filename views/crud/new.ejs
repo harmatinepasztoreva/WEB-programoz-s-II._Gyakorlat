@@ -1,0 +1,71 @@
+<%- include("../partials/header") %>
+<div class="container my-5">
+    <h1 class="mb-4">Új notebook</h1>
+    <form method="post" action="/crud/insert" class="row g-3" novalidate>
+        <div class="col-md-6">
+            <label class="form-label" for="gyarto">Gyártó</label>
+            <input class="form-control <%= errors.gyarto ? 'is-invalid' : '' %>" type="text" id="gyarto" name="gyarto" value="<%= gep.gyarto ?? '' %>">
+            <div class="invalid-feedback"><%= errors.gyarto ? errors.gyarto.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="tipus">Típus</label>
+            <input class="form-control <%= errors.tipus ? 'is-invalid' : '' %>" type="text" id="tipus" name="tipus" value="<%= gep.tipus ?? '' %>">
+            <div class="invalid-feedback"><%= errors.tipus ? errors.tipus.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="kijelzo">Kijelző (hüvelyk)</label>
+            <input class="form-control <%= errors.kijelzo ? 'is-invalid' : '' %>" type="number" step="0.1" id="kijelzo" name="kijelzo" value="<%= gep.kijelzo ?? '' %>">
+            <div class="invalid-feedback"><%= errors.kijelzo ? errors.kijelzo.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="memoria">Memória (MB)</label>
+            <input class="form-control <%= errors.memoria ? 'is-invalid' : '' %>" type="number" id="memoria" name="memoria" value="<%= gep.memoria ?? '' %>">
+            <div class="invalid-feedback"><%= errors.memoria ? errors.memoria.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="merevlemez">Merevlemez (GB)</label>
+            <input class="form-control <%= errors.merevlemez ? 'is-invalid' : '' %>" type="number" id="merevlemez" name="merevlemez" value="<%= gep.merevlemez ?? '' %>">
+            <div class="invalid-feedback"><%= errors.merevlemez ? errors.merevlemez.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="videovezerlo">Videovezérlő</label>
+            <input class="form-control <%= errors.videovezerlo ? 'is-invalid' : '' %>" type="text" id="videovezerlo" name="videovezerlo" value="<%= gep.videovezerlo ?? '' %>">
+            <div class="invalid-feedback"><%= errors.videovezerlo ? errors.videovezerlo.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="processzorid">Processzor</label>
+            <select class="form-select <%= errors.processzorid ? 'is-invalid' : '' %>" id="processzorid" name="processzorid">
+                <option value="">-- válasszon --</option>
+                <% processzorok.forEach(x => { %>
+                <option value="<%= x.id %>" <%= String(gep.processzorid) === String(x.id) ? "selected" : "" %>><%= x.gyarto + " " + x.tipus %></option>
+                <% }) %>
+            </select>
+            <div class="invalid-feedback"><%= errors.processzorid ? errors.processzorid.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="oprendszerid">Operációs rendszer</label>
+            <select class="form-select <%= errors.oprendszerid ? 'is-invalid' : '' %>" id="oprendszerid" name="oprendszerid">
+                <option value="">-- válasszon --</option>
+                <% oprendszerek.forEach(x => { %>
+                <option value="<%= x.id %>" <%= String(gep.oprendszerid) === String(x.id) ? "selected" : "" %>><%= x.nev %></option>
+                <% }) %>
+            </select>
+            <div class="invalid-feedback"><%= errors.oprendszerid ? errors.oprendszerid.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="ar">Ár (Ft)</label>
+            <input class="form-control <%= errors.ar ? 'is-invalid' : '' %>" type="number" id="ar" name="ar" value="<%= gep.ar ?? '' %>">
+            <div class="invalid-feedback"><%= errors.ar ? errors.ar.message : "" %></div>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="db">Raktáron (db)</label>
+            <input class="form-control <%= errors.db ? 'is-invalid' : '' %>" type="number" id="db" name="db" value="<%= gep.db ?? '' %>">
+            <div class="invalid-feedback"><%= errors.db ? errors.db.message : "" %></div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary">Mentés</button>
+            <a class="btn btn-secondary" href="/crud">Vissza</a>
+        </div>
+    </form>
+</div>
+<%- include("../partials/footer") %>
