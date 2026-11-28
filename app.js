@@ -22,5 +22,12 @@ app.use((req, res, next) => {
     next();
 });
 app.use("/", require("./routes/mainRouter"));
+app.use((req, res) => {
+    res.status(404).render("error", { hiba: "Az oldal nem található." });
+});
+app.use((err, req, res, next) => {
+    console.error(err.message);
+    res.status(500).render("error", { hiba: "Hiba történt a kérés feldolgozása közben." });
+});
 const port = process.env.PORT || 3000;
 app.listen(port, () => {console.log(`Server: http://localhost:${port}`);});
